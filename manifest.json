@@ -1,0 +1,27 @@
+{
+  "id": "qol_jo5k",
+  "name": "Qol - Jo5-k",
+  "version": "0.1.0-beta.1",
+  "api": 3,
+  "entry": "main.lua",
+  "profile": "overhaul",
+  "category": "GAMEPLAY",
+  "priority": 150,
+  "games": [
+    "emerald",
+    "ruby",
+    "sapphire",
+    "firered",
+    "leafgreen"
+  ],
+  "game_version": ">=0.3.97",
+  "permissions": [
+    "engine_internals"
+  ],
+  "dependencies": [],
+  "conflicts": [],
+  "experimental": true,
+  "affects_link": true,
+  "github": "Jo5-K/Qol-Jo5-k",
+  "description": "QoL configurável PT/EN: cura, experiência, TMs/HMs, captura, itens, ovos, Flash e textos."
+}
