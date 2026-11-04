@@ -63,6 +63,11 @@ return function(mod)
   if not key or not marked[key]or vm._jo5QuickNurseOwner~=(vm._scriptKey or key)then return nextFn(ctx,op,row)end
   -- Only the native healing call graph. Keep movement, actual heal, Pokerus,
   -- stat/flag updates and control release; skip dialogue and confirmations.
+  -- FRLG's nurse uses MULTICHOICE_YES_NO (YES is row zero), unlike
+  -- Hoenn's MSGBOX_YESNO (YES is one). Never expose the Kanto menu.
+  if roots[key]and(op=='multichoice'or op=='multichoicedefault'or op=='multichoicegrid')then
+   Flags.setVar(vm.store,vm.ctx,0x800D,0);return false
+  end
   if op=='callstd' then
    local std=row.std or row[1]
    if std==5 then Flags.setVar(vm.store,vm.ctx,0x800D,1);return false end

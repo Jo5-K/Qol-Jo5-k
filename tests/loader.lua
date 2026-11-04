@@ -22,6 +22,8 @@ for _,game in ipairs({'emerald','ruby','sapphire','firered','leafgreen'})do
  local called=0
  loader.hooks:call('script.command',function()called=called+1 end,{},'callstd',{op='callstd',std=5})
  assert(called==0 and Space.vm.ctx.specialVars[0x800D]==1,'nurse confirmation auto-accepts')
+ loader.hooks:call('script.command',function()called=called+1 end,{},'multichoice',{op='multichoice'})
+ assert(called==0 and Space.vm.ctx.specialVars[0x800D]==0,'FRLG multichoice YES is row zero, no prompt')
  Space.vm.ctx.pc.listKey='heal';loader.hooks:call('script.command',function()called=called+1 end,{},'special',{op='special',id=0});assert(called==1,'native healing preserved')
  Space.vm.ctx.pc.listKey='other';loader.hooks:call('script.command',function()called=called+1 end,{},'callstd',{op='callstd',std=5});assert(called==2,'other dialogues unaffected')
  if game=='emerald' and os.getenv('EMERALD_SCRIPTS')then

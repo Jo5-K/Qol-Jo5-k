@@ -1,4 +1,4 @@
-# Qol - Jo5-k — 0.1.0-beta.1
+# Qol - Jo5-k — 0.1.0-beta.2
 
 Qualidade de vida opcional para Pokémon Emerald, Ruby, Sapphire, FireRed e LeafGreen no G1R **0.3.97+ / API 3**.
 
@@ -38,3 +38,7 @@ As opções, exceto a enfermeira, começam no comportamento nativo/desligado. As
 ## Technical notes / manutenção
 
 Usa hooks oficiais quando disponíveis e wrappers limitados de funções nativas para recursos sem hook (consumo de TM, dinheiro, máscara de Flash etc.). Não altera arquivos do motor, ROMs ou outros mods. Os wrappers são restaurados ao sair e reutilizam uma lease para recarga. Traduções de nomes/mensagens do jogo permanecem nativas ou fornecidas pelo mod de idioma. Não implementa geração de itens, roubo de itens infinitos ou desbloqueio de insígnias.
+
+### Beta 2
+
+Cobre também a lista MULTICHOICE_YES_NO da enfermeira em FRLG (Sim = índice 0), sem confundir com MSGBOX_YESNO de Hoenn (Sim = 1). Nomes das rotas e os dois formatos conferidos nos scripts de referência de pret/pokefirered e pret/pokeruby.
