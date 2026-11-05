@@ -63,6 +63,14 @@ for _,game in ipairs({'emerald','ruby','sapphire','firered','leafgreen'})do
  assert(shortcut,'START has QOL settings');shortcut.onSelect()
  local screen=assert(require('src.ui.game3.mod_ui').stackFor(owner):top())
  assert(#screen.items==14,'all options and language are available')
+ local Font=require('src.ui.game3.frlg_font');local nativeDraw=Font.draw;local drawn={}
+ Font.draw=function(text)drawn[#drawn+1]=text end
+ screen:draw();assert(#drawn>=12 and table.concat(drawn,'|'):find('Idioma / Language',1,true),'Gen3 labels actually drawn')
+ Font.draw=nativeDraw
+ local pressed={};owner.input={wasPressed=function(_,key)return pressed[key]end,isDown=function()return false end}
+ pressed.down=true;screen:update(1/60);assert(screen.index==2,'controller navigates')
+ pressed={b=true};screen:update(1/60);assert(not require('src.ui.game3.mod_ui').stackFor(owner):top(),'B closes menu')
+ shortcut.onSelect();screen=assert(require('src.ui.game3.mod_ui').stackFor(owner):top())
  local Manager=require('src.mods.ManagerState');Manager.new(owner):setOption('qol_jo5k','language','en')
  -- Cycle language through the same callback used by controller and touch.
  screen.onChoose(screen.items[1],screen)

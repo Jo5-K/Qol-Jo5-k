@@ -104,7 +104,36 @@ return function(mod)
    end
    require('src.mods.ManagerState').new(game):setOption(mod.id,row.key,value);refresh(menu)
   end})
-  refresh(menu);return menu
+  refresh(menu)
+  -- ListMenu supplies navigation only; its Gen1 glyph atlas is absent in Gen3.
+  menu.gbaCanvas=true
+  menu.rows=5
+  function menu:draw()
+   local g=love.graphics
+   local Font=require('src.ui.game3.frlg_font')
+   g.push('all')
+   local ok,err=pcall(function()
+    refresh(self)
+    g.setColor(.07,.13,.16,1);g.rectangle('fill',0,0,240,160)
+    g.setColor(.93,.95,.89,1);g.rectangle('fill',6,6,228,148,3,3)
+    local opts={colors=Font.COLOR.NORMAL,maxWidth=208}
+    Font.draw('Qol - Jo5-k',16,10,opts)
+    for r=1,self.rows do
+     local i=self.scroll+r;local item=self.items[i]
+     if not item then break end
+     local y=29+(r-1)*22
+     if i==self.index then
+      g.setColor(.12,.40,.34,.18);g.rectangle('fill',12,y-1,216,22,2,2)
+      Font.draw('>',14,y,opts)
+     end
+     Font.draw(item.label,25,y,opts)
+     Font.draw(item.right,25,y+10,opts)
+    end
+    Font.draw(option('language','pt-BR')=='en' and 'A: change   B: back' or 'A: alterar   B: voltar',16,143,opts)
+   end)
+   g.pop();if not ok then error(err,0)end
+  end
+  return menu
  end})
  mod.hooks:wrap('ui.start_menu.items',function(nextFn,game,rows)
   rows=nextFn(game,rows)
