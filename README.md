@@ -1,8 +1,8 @@
-# Qol - Jo5-k — 0.1.0-beta.2
+# Qol - Jo5-k — 0.1.0
 
 Qualidade de vida opcional para Pokémon Emerald, Ruby, Sapphire, FireRed e LeafGreen no G1R **0.3.97+ / API 3**.
 
-Copie a pasta `qol_jo5k` do ZIP para `mods/`. Ative o mod no gerenciador. Acesse **START → QOL**, ou suas opções no gerenciador. Todas as opções possuem rótulos em **English / Português** e são salvas pelo sistema nativo. Controle e toque utilizam o menu nativo do G1R.
+Copie a pasta `qol_jo5k` do ZIP para `mods/`. Ative o mod no gerenciador. Acesse **START → QOL**, ou suas opções no gerenciador. Todas as opções possuem rótulos em **English / Português** e são salvas pelo sistema nativo. O inglês é o padrão para novas instalações, e as escolhas de idioma já salvas são preservadas. Controle e toque utilizam o menu nativo do G1R.
 
 | Opção | Comportamento |
 |---|---|
@@ -26,10 +26,10 @@ As opções, exceto a enfermeira, começam no comportamento nativo/desligado. As
 
 200 XP, seis aptos, um participante: **100 + 20 + 20 + 20 + 20 + 20**. Três aptos: **100 + 50 + 50**. Restos inteiros são distribuídos sem criar ou perder XP antes dos bônus individuais. Lucky Egg, treinador e troca seguem o processo nativo; aprendizagem de golpes e evolução continuam nele.
 
-## Validação desta beta
+## Validação da versão 0.1.0
 
 - Carregador API 3 e menu START nos cinco jogos via SDK oficial.
-- Script real extraído da enfermeira de Emerald executado na VM nativa com adaptadores simulados: cura uma vez, sem mensagens, e termina.
+- Script real extraído da enfermeira de Emerald executado na VM nativa com adaptadores simulados: cura uma vez, sem mensagens, e termina. O teste do carregador também verifica que a despedida não exige A ou B.
 - Experiência executada por `Experience.awardFoe`: seis aptos, três/quatro aptos, exclusão de ovos/desmaiados, modo nativo e conservação dos pools.
 - Testes específicos de TMs imediatos/assíncronos, venda, ajuda, cura/captura, XP/dinheiro, consumíveis, ovos, Flash, textos, HMs, traduções e restauração.
 
