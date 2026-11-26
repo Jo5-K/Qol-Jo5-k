@@ -52,3 +52,5 @@ stop();stop();assert(Prize.calc()==100 and View.flashRadius()==50 and Message.sh
 local build=assert(loadfile(root..'/settings.lua'))();local en,pt=build('en'),build('pt-BR');assert(#en==14 and #pt==14)
 for i,r in ipairs(en)do assert(r.key==pt[i].key and r.label~=nil and pt[i].label~=nil)end
 print('PASS: TM sync/async and sale guard; help; catch heal/rate; XP/money; held items; eggs; Flash; text; HM; bilingual settings; cleanup')
+
+assert(build()[1].default=='en' and build()[2].label==en[2].label and pt[2].label~=en[2].label)

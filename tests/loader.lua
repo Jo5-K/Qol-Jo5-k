@@ -26,6 +26,13 @@ for _,game in ipairs({'emerald','ruby','sapphire','firered','leafgreen'})do
  assert(called==0 and Space.vm.ctx.specialVars[0x800D]==0,'FRLG multichoice YES is row zero, no prompt')
  Space.vm.ctx.pc.listKey='heal';loader.hooks:call('script.command',function()called=called+1 end,{},'special',{op='special',id=0});assert(called==1,'native healing preserved')
  Space.vm.ctx.pc.listKey='other';loader.hooks:call('script.command',function()called=called+1 end,{},'callstd',{op='callstd',std=5});assert(called==2,'other dialogues unaffected')
+ Space.vm.ctx.pc.listKey='heal'
+ for _,std in ipairs({2,4,6})do
+  loader.hooks:call('script.command',function()error('nurse farewell opened')end,{},'callstd',{op='callstd',std=std})
+ end
+ loader.hooks:call('script.command',function(_,op,row)
+  assert(op=='closemessage' and row.op=='closemessage','nurse dismisses residual text without input')
+ end,{},'waitbuttonpress',{op='waitbuttonpress'})
  if game=='emerald' and os.getenv('EMERALD_SCRIPTS')then
   local d=os.getenv('EMERALD_SCRIPTS')
   local labels=assert(loadfile(d..'/labels.lua'))();local scripts=assert(loadfile(d..'/scripts.lua'))()
@@ -65,7 +72,7 @@ for _,game in ipairs({'emerald','ruby','sapphire','firered','leafgreen'})do
  assert(#screen.items==14,'all options and language are available')
  local Font=require('src.ui.game3.frlg_font');local nativeDraw=Font.draw;local drawn={}
  Font.draw=function(text)drawn[#drawn+1]=text end
- screen:draw();assert(#drawn>=12 and table.concat(drawn,'|'):find('Idioma / Language',1,true),'Gen3 labels actually drawn')
+ screen:draw();assert(#drawn>=12 and table.concat(drawn,'|'):find('Language / Idioma',1,true),'Gen3 labels actually drawn')
  Font.draw=nativeDraw
  local pressed={};owner.input={wasPressed=function(_,key)return pressed[key]end,isDown=function()return false end}
  pressed.down=true;screen:update(1/60);assert(screen.index==2,'controller navigates')

@@ -5,8 +5,8 @@ local labels={
  infinite_held={'Itens equipados reutilizáveis','Reusable held consumables'},instant_eggs={'Ovos: eclosão no próximo passo','Eggs: hatch on next step'},auto_flash={'Flash automático','Automatic Flash'},instant_text={'Textos instantâneos','Instant text'},
 }
 return function(language)
- local en=language=='en';local col=en and 2 or 1
- local rows={{key='language',label=labels.language[col],type='choice',default='pt-BR',choices={{'English','en'},{'Português','pt-BR'}}}}
+ local en=language~='pt-BR';local col=en and 2 or 1
+ local rows={{key='language',label=labels.language[col],type='choice',default='en',choices={{'English','en'},{'Português','pt-BR'}}}}
  local keys={'quick_nurse','experience','reusable_tms','hm_without_move','disable_help','heal_caught','always_catch','exp_multiplier','money_multiplier','infinite_held','instant_eggs','auto_flash','instant_text'}
  for _,key in ipairs(keys)do
   local row={key=key,label=labels[key][col],type='toggle',default=key=='quick_nurse'}

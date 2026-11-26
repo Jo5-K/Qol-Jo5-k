@@ -3,7 +3,7 @@ return function(mod)
  if not ({emerald=true,ruby=true,sapphire=true,firered=true,leafgreen=true})[GV.get()]then return end
  local X=assert(loadstring(assert(mod:read('experience.lua')),'@qol_jo5k/experience.lua'))()
  local settings=assert(loadstring(assert(mod:read('settings.lua')),'@qol_jo5k/settings.lua'))()
- local function define()mod.options:define(settings(mod.options:get('language')or 'pt-BR'))end
+ local function define()mod.options:define(settings(mod.options:get('language')or 'en'))end
  define()
  local Space=require('src.core.game3.scripting.space')
  local Battle=require('src.core.game3.battle')
@@ -71,9 +71,14 @@ return function(mod)
   if op=='callstd' then
    local std=row.std or row[1]
    if std==5 then Flags.setVar(vm.store,vm.ctx,0x800D,1);return false end
-   if std==4 then return false end
+   -- NPC, default and autoclose text boxes can all carry the farewell.
+   if std==2 or std==4 or std==6 then return false end
   end
-  if op=='message' or op=='waitmessage' or op=='waitbuttonpress' or op=='yesnobox' then
+  if op=='waitbuttonpress' then
+   -- Close any box left by a native command and let the script release control.
+   return nextFn(ctx,'closemessage',{op='closemessage'})
+  end
+  if op=='message' or op=='waitmessage' or op=='yesnobox' then
    if op=='yesnobox' then Flags.setVar(vm.store,vm.ctx,0x800D,1)end
    return false
   end
@@ -84,10 +89,10 @@ return function(mod)
  mod.events:on('mod.options_changed',function(e)if e and e.mod==mod.id and e.key=='language'then define()end end)
  local SCREEN='qol_jo5k_settings'
  mod.content.screens:register(SCREEN,{new=function(game)
-  local items={};for _,row in ipairs(settings(option('language','pt-BR')))do items[#items+1]={key=row.key}end
+  local items={};for _,row in ipairs(settings(option('language','en')))do items[#items+1]={key=row.key}end
   local function refresh(menu)
-   local en=option('language','pt-BR')=='en';menu.title='Qol - Jo5-k'
-   local schema=settings(option('language','pt-BR'))
+   local en=option('language','en')=='en';menu.title='Qol - Jo5-k'
+   local schema=settings(option('language','en'))
    for i,item in ipairs(menu.items)do
     local row=schema[i];local value=option(row.key,row.default);local display
     if row.type=='toggle'then display=value and(en and 'On'or 'Ligada')or(en and 'Off'or 'Desligada')
@@ -96,7 +101,7 @@ return function(mod)
    end
   end
   local menu=mod.ui.ListMenu.new(game,'Qol - Jo5-k',items,{onChoose=function(item,menu)
-   local row;for _,r in ipairs(settings(option('language','pt-BR')))do if r.key==item.key then row=r;break end end
+   local row;for _,r in ipairs(settings(option('language','en')))do if r.key==item.key then row=r;break end end
    local current=option(row.key,row.default);local value
    if row.type=='toggle'then value=not current else
     local index=1;for i,c in ipairs(row.choices)do if c[2]==current then index=i;break end end
@@ -129,7 +134,7 @@ return function(mod)
      Font.draw(item.label,25,y,opts)
      Font.draw(item.right,25,y+10,opts)
     end
-    Font.draw(option('language','pt-BR')=='en' and 'A: change   B: back' or 'A: alterar   B: voltar',16,143,opts)
+    Font.draw(option('language','en')=='en' and 'A: change   B: back' or 'A: alterar   B: voltar',16,143,opts)
    end)
    g.pop();if not ok then error(err,0)end
   end
